@@ -10,11 +10,12 @@
 ---
 
 # Problems with css
-- CSS requires trust
-- CSS is open to interpretation
-- everyone on your team needs to be dedicated to CSS or it falls apart
-- BEM (Block Element Modifier) is dumb. There’s no reason everyone on your team has to learn a complicated mental model for turning a square green
-- Where your node lives inside of your app or webpage shouldn't determine it's styling
+- CSS requires trust |
+- CSS is open to interpretation |
+- everyone on your team needs to be dedicated to CSS or it falls apart |
+- reorganizing parts of your page can break all of your styles
+
+note: (or you have that one person who is really into CSS and hates all their coworkers) 
 
 ---
 
