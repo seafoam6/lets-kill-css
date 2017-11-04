@@ -13,7 +13,7 @@
 - CSS requires trust |
 - CSS is open to interpretation |
 - everyone on your team needs to be dedicated to CSS or it falls apart |
-- reorganizing parts of your page can break all of your styles
+- reorganizing parts of your page can break all of your styles |
 
 note: (or you have that one person who is really into CSS and hates all their coworkers) 
 
@@ -29,7 +29,7 @@ Stands for "Cascading Style Sheets"
 
 ---
 
-# The Cascade
+### The Cascade
 
 A CSS primer for you: 
 - A class can be used to style an element. 
@@ -42,7 +42,7 @@ A CSS primer for you:
 
 ---
 
-# Go read someone else's css
+### Go read someone else's css
 
 If you open a website, reading the CSS from top to bottom, you'll be reading a historic record of the css from begining to end. Typically at the begining you'll see clean intelligent focused styles. 
 
