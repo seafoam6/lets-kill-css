@@ -138,5 +138,5 @@ note: in JS, we just need to convert any kabob-case into camel case. This is jus
 ### let's do it
 
 ```
-+++?gist=seafoam6/07c47e05d6f7046eb4fcf97512ceb99e=JavaScript
+---?gist=seafoam6/07c47e05d6f7046eb4fcf97512ceb99e
 ```
