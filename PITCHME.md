@@ -5,7 +5,8 @@
 
 ---
 
-> Two css properties walk into a bar. A barstool in a completely different bar falls over. - [@thomasfuchs](https://twitter.com/thomasfuchs)
+> Two css properties walk into a bar. A barstool in a completely different bar falls over. 
+> - [@thomasfuchs](https://twitter.com/thomasfuchs)
 
 ---
 
@@ -98,7 +99,7 @@ note: I've worked on similar projects, where by the end, the client had us move 
 ---
 
 # JavaScript to the Rescue
-
+If you have the full power of JavaScript, why let the limitations of CSS get in your way?
 ---
 
 ### Forget the cascade with Object.assign()
@@ -180,6 +181,114 @@ No matter where we move this `JSX` block, as long as we have this style block at
 # Other flavors
 
 - styled-components | 
-- css-modules |
-- glamouous |
 - jsxstyle |
+- glamouous |
+- css-modules |
+
+
+note: let's see how other Styles-in-js libraries work
+---
+
+### Styled-components
+
+> "Best Practices? I don't give a shit. I need to get this done by tomorrow." 
+> - Max Stoiber
+
+note: Styled-components keeps everything componentized, just like React!
+
+---
+minor alteration to pass down `className`
+
+```
+const NextLink = ({ link, className }) => (
+  <Link href={link.link}>
+    <a className={`f6 f5-l link bg-animate black-80 hover-bg-light-yellow dib pa3 ph4-l ${className}`}>{link.name}</a>
+  </Link>
+)
+```
+
+---
+
+```
+const BlueLink = styled(NextLink)`
+color: blue;
+font-weight: bold;
+  &:hover{
+    background: DarkSeaGreen
+  }
+`
+// later in the file
+render = () => <BlueLink link={link} key={shortid.generate()} />
+```
+note: now anywhere that I would have used the NextLink, I can Use the BlueLink the exact same way. What this looks like in the dom, is there will be a generated class name that's mapped to a generated style tag. 
+
+---
+Modify styles based on props. 
+
+```
+const BlueLink = styled(NextLink)`
+color: blue;
+font-weight: bold;
+background: ${props => props.primary ? 'palevioletred' : 'white'};
+  &:hover{
+    background: DarkSeaGreen
+  }
+`
+// later in the file
+render = () => <BlueLink primary link={link} key={shortid.generate()} />
+```
+note: there's also a themeing system built in! Passing in a theme prop, can modify your themes. Arguments to the styles can also be passed in as props. 
+---
+### JSXStyle
+
+```
+  <Block
+    backgroundColor="#EEE"
+    boxShadow="inset 0 0 0 1px rgba(0,0,0,0.15)"
+    borderRadius={5}
+    height={64}
+    width={64}
+    marginRight={15}
+    backgroundSize="contain"
+    backgroundImage="url(http://graph.facebook.com/justinbieber/picture?type=large)"
+  />
+```
+note: This saves you the time of naming classes, because there aren't any classes to name. Don't jump between CSS and JS files. 
+
+---
+
+### GLamorous
+
+```
+const MyStyledDiv = glamorous.div({
+  fontSize: 20,
+  textAlign: 'center',
+})
+
+// later
+
+<myStyledDiv>Wow a Div!</myStyledDiv>
+```
+note: glamorous is very much like styled components, except it requires you to write with JS style objects. You can also override a components style by passing in styles to the CSS prop, as well as overriding it's childrens styles. 
+
+---
+### CSS Modules
+
+```
+import React from 'react';
+import styles from './DashedBox.css';
+
+const DashedBox = () => (
+  <div className={styles.container}>
+    <p className={styles.content}>Get started with CSS Modules style</p>
+  </div>
+);
+
+export default DashedBox;
+
+```
+note: I kind of hate this because it's the worst of both worlds. The CSS is scoped to the component though! camelcase only!
+
+---
+
+# Questions, Comments?
