@@ -1,2 +1,2 @@
-theme-override : ./styles.css
+theme-override : styles.css
 logo : https://avatars1.githubusercontent.com/u/19155545?s=200&v=4
