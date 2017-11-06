@@ -8,13 +8,15 @@
 > Two css properties walk into a bar. A barstool in a completely different bar falls over. 
 > - [@thomasfuchs](https://twitter.com/thomasfuchs)
 
+note: before I was writing JS applications, burn and churn css work. 
+
 ---
 
 # Problems with css
-- too many mental models |
-- CSS is open to interpretation |
+- too many mental models, interpretation of those models |
 - everyone on your team needs to be dedicated to CSS or it falls apart |
 - reorganizing parts of your page can break all of your styles |
+- find yourself hunting for wear a style is defined |
 
 
 note: (or you have that one person who is really into CSS and hates all their coworkers) 
@@ -44,7 +46,9 @@ Specificity rules are annoying.
 
 ### Go read someone else's css
 
-If you open a website, reading the CSS from top to bottom, you'll be reading a historic record of the css from begining to end. Typically at the begining you'll see clean intelligent focused styles. 
+CSS is a historic record. 
+
+note: If you open a website, reading the CSS from top to bottom, you'll be reading a historic record of the css from begining to end. Typically at the begining you'll see clean intelligent focused styles. 
 
 ---
 
@@ -86,9 +90,12 @@ What does this block of CSS do?
 note: the main problem with the cascade is that it's styles matter, it's parents styles matter, and in general it matters where the element or component lies in the DOM. 
 ---
 
-What about if we want to move `blue_button_right` ? 
-1) rewrite your css
-2) maybe give it an `id`, but then you'll have to overpower it later
+What about if we want to 
+move `blue_button_right` 
+outside of it's parents? 
+* rewrite your css |
+* add an additional class |
+* maybe give it an `id`, but then you'll have to overpower it later |
 
 ---
 
@@ -100,19 +107,19 @@ button.giant_blue_button:hover .blue_button .blue_button_right {
 }
 ```
 
-Someone at Tumblr convinced their team there would be something called `blue_button` and something called `blue_button_right`. 
+The Tumblr team agreed there would be something called `blue_button` and something inside of that button called `blue_button_right`. 
 
-note: I've worked on similar projects, where by the end, the client had us move `blue_button_right` to the left, but no one wanted to search/replace all their CSS, rename everything and repair all the css. So `blue_button_right` just happened to live to the left of `blue_button_left`
+note: I've worked on similar projects, where by the end, the client had us move `blue_button_right` to the left, but no one wanted to search/replace all their CSS, rename everything and repair all the css. So `blue_button_right` just happened to live to the left of `blue_button_left`... that's CSS
 
 ---
 
 # JavaScript to the Rescue
-If you have the full power of JavaScript, why let the limitations of CSS get in your way?
 
-note: CSS is antiquated when used in complex apps. 
+
+note: If you have the full power of JavaScript, why let the limitations of CSS get in your way? JS is handling the creation of the HTML for the dom... it can do css too. CSS is antiquated when used in complex apps. IF JS wasn't the best why would we all be at his meetup?
 ---
 
-### styles in React
+### styles in CSS
 
 in CSS:
 ```
@@ -147,14 +154,14 @@ const NextLink = ({ link }) => (
   </Link>
 )
 ```
-note: this is from our DetroitJS website. DetroitJS uses tachyons a css library of helper functions. This block deals with navigation links that go to other routed pages, rather than external links. Let's say we want to add our POJO of styles from the last slide to just this block. We could add yet another CSS class to the list, we could find out what border bottom, and italic are. Let's be lazy.
+note: this is from our DetroitJS website. DetroitJS uses tachyons a css library of helper functions. This block deals with navigation links that go to other routed pages, rather than external links. Let's say we want to add our POJO of styles from the last slide to just this block. We could search Tachyons to see if there's a set of classes that would do what we want. But lets not. 
 
 ---
 
 The easy way.
 
 ```
-import internalLink from "../../styles.js"
+import { internalLink } from "../../styles.js"
 
 const NextLink = ({ link }) => (
   <Link href={link.link}>
@@ -178,17 +185,18 @@ note:  Properties later in the chain will supercede properties earlier in the ch
 
 No matter where we move this `JSX` block, as long as we have this style block attached, the styles will render as we expect them to. 
 
+note: no worrying about combinations of classes, naming conventions like BEM, OOCSS, ez pz, anywhere we move this block it will render as expectd.  
 ---
 
 # Other flavors
 
 - styled-components | 
 - jsxstyle |
-- glamouous |
+- glamoruous |
 - css-modules |
 
 
-note: let's see how other Styles-in-js libraries work
+note: I cheated. Removed hover elements. let's see how other Styles-in-js libraries work
 ---
 
 ### Styled-components
@@ -201,7 +209,7 @@ note: Styled-components keeps everything componentized, just like React!
 ---
 minor alteration to pass down `className`
 
-```
+```javascript
 const NextLink = ({ link, className }) => (
   <Link href={link.link}>
     <a className={`f6 f5-l link bg-animate black-80 hover-bg-light-yellow dib pa3 ph4-l ${className}`}>{link.name}</a>
@@ -211,7 +219,7 @@ const NextLink = ({ link, className }) => (
 
 ---
 
-```
+```javascript
 const BlueLink = styled(NextLink)`
 color: blue;
 font-weight: bold;
@@ -227,7 +235,7 @@ note: now anywhere that I would have used the NextLink, I can Use the BlueLink t
 ---
 Modify styles based on props. 
 
-```
+```javascript
 const BlueLink = styled(NextLink)`
 color: blue;
 font-weight: bold;
@@ -243,7 +251,7 @@ note: there's also a themeing system built in! Passing in a theme prop, can modi
 ---
 ### JSXStyle
 
-```
+```javascript
   <Block
     backgroundColor="#EEE"
     boxShadow="inset 0 0 0 1px rgba(0,0,0,0.15)"
@@ -261,7 +269,7 @@ note: This saves you the time of naming classes, because there aren't any classe
 
 ### Glamorous
 
-```
+```javascript
 const MyStyledDiv = glamorous.div({
   fontSize: 20,
   textAlign: 'center',
@@ -276,7 +284,7 @@ note: glamorous is very much like styled components, except it requires you to w
 ---
 ### CSS Modules
 
-```
+```javascript
 import React from 'react';
 import styles from './DashedBox.css';
 
