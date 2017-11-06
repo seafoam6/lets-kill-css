@@ -48,7 +48,7 @@ Specificity rules are annoying.
 
 CSS is a historic record. 
 
-note: If you open a website, reading the CSS from top to bottom, you'll be reading a historic record of the css from begining to end. Typically at the begining you'll see clean intelligent focused styles. 
+note: If you open a website, reading the CSS from top to bottom, you'll be reading a historic record of the css from beginning to end. Typically at the beginning you'll see clean intelligent focused styles. 
 
 ---
 
@@ -116,7 +116,7 @@ note: I've worked on similar projects, where by the end, the client had us move 
 # JavaScript to the Rescue
 
 
-note: If you have the full power of JavaScript, why let the limitations of CSS get in your way? JS is handling the creation of the HTML for the dom... it can do css too. CSS is antiquated when used in complex apps. IF JS wasn't the best why would we all be at his meetup?
+note: If you have the full power of JavaScript, why let the limitations of CSS get in your way? JS is handling the creation of the HTML for the dom... it can do css too. CSS is antiquated when used in complex apps. IF JS wasn't the best why would we all be at his Meetup?
 ---
 
 ### styles in CSS
@@ -177,7 +177,7 @@ note: now there's no worrying that some other class is going to mess our style u
 
 const superStyle = Object.assign(internalLink, blueStuff, sunnyD, purpleStuff);
 
-note:  Properties later in the chain will supercede properties earlier in the chain. So here, the purpleStuff wins. 
+note:  Properties later in the chain will supersede properties earlier in the chain. So here, the purpleStuff wins. 
 
 ---
 
@@ -185,7 +185,7 @@ note:  Properties later in the chain will supercede properties earlier in the ch
 
 No matter where we move this `JSX` block, as long as we have this style block attached, the styles will render as we expect them to. 
 
-note: no worrying about combinations of classes, naming conventions like BEM, OOCSS, ez pz, anywhere we move this block it will render as expectd.  
+note: no worrying about combinations of classes, naming conventions like BEM, OOCSS, ez pz, anywhere we move this block it will render as expected.  
 ---
 
 # Other flavors
@@ -204,7 +204,7 @@ note: I cheated. Removed hover elements. let's see how other Styles-in-js librar
 > "Best Practices? I don't give a shit. I need to get this done by tomorrow." 
 > - Max Stoiber
 
-note: Styled-components keeps everything componentized, just like React!
+note: Styled-components keeps everything componentised, just like React!
 
 ---
 minor alteration to pass down `className`
@@ -247,7 +247,7 @@ background: ${props => props.primary ? 'palevioletred' : 'white'};
 // later in the file
 render = () => <BlueLink primary link={link} key={shortid.generate()} />
 ```
-note: there's also a themeing system built in! Passing in a theme prop, can modify your themes. Arguments to the styles can also be passed in as props. read more about it at https://www.styled-components.com/docs/tooling#styled-theming
+note: there's also a theming system built in! Passing in a theme prop, can modify your themes. Arguments to the styles can also be passed in as props. read more about it at https://www.styled-components.com/docs/tooling#styled-theming
 ---
 ### JSXStyle
 
