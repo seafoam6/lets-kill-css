@@ -11,11 +11,11 @@
 ---
 
 # Problems with css
-- CSS requires trust |
+- too many mental models |
 - CSS is open to interpretation |
 - everyone on your team needs to be dedicated to CSS or it falls apart |
 - reorganizing parts of your page can break all of your styles |
-- too many mental models
+
 
 note: (or you have that one person who is really into CSS and hates all their coworkers) 
 
@@ -28,14 +28,17 @@ Stands for "Cascading Style Sheets"
 
 ### The Cascade
 
-A CSS primer for you: 
-- A class can be used to style an element. 
-- if there are two contradictory css rules for that class, the css class that's further down the page will win. 
-- two classes will beat one class
-- an id will beat a class
-- an important will beat a class
-- an inline style will beat that class
-- if there's multiple class names on the same element, the last classname will win (assuming the same specificity)
+Specificity rules are annoying. 
+
+![spec](https://css-tricks.com/wp-content/csstricks-uploads/specificity-calculationbase.png)
+
+---
+
+![spec](https://css-tricks.com/wp-content/csstricks-uploads/cssspecificity-calc-2.png)
+
+---
+
+![spec](https://css-tricks.com/wp-content/csstricks-uploads/cssspecificity-calc-4.png)
 
 ---
 
@@ -67,6 +70,8 @@ near the end, line 25843:
 
 ```
 
+note: Css gratiously donated by tumblr.com
+
 ---
 
 ## Position matters
@@ -76,7 +81,10 @@ button.giant_blue_button:hover .blue_button .blue_button_right {
     background-position: -960px -100px
 }
 ```
-Cool, so this "blue button right" will have that background position, when it's inside an element with the class `blue_button` inside a button with the class `giant_blue_button` that's actively being hovered.
+What does this block of CSS do?
+
+note: the main problem with the cascade is that it's styles matter, it's parents styles matter, and in general it matters where the element or component lies in the DOM. 
+---
 
 What about if we want to move `blue_button_right` ? 
 1) rewrite your css
@@ -94,33 +102,26 @@ button.giant_blue_button:hover .blue_button .blue_button_right {
 
 Someone at Tumblr convinced their team there would be something called `blue_button` and something called `blue_button_right`. 
 
-note: I've worked on similar projects, where by the end, the client had us move `blue_button_right` to the left, but no one wanted to search/replace all their CSS, rename everything and repair all the broken css. So `blue_button_right` just happened to live to the left of `blue_button_left`
+note: I've worked on similar projects, where by the end, the client had us move `blue_button_right` to the left, but no one wanted to search/replace all their CSS, rename everything and repair all the css. So `blue_button_right` just happened to live to the left of `blue_button_left`
 
 ---
 
 # JavaScript to the Rescue
 If you have the full power of JavaScript, why let the limitations of CSS get in your way?
+
+note: CSS is antiquated when used in complex apps. 
 ---
 
-### Forget the cascade with Object.assign()
-
----
-
-Put your stuff where ever you want
-
---- 
-
-### Use javascript to get rid of naming conflicts, scoped styles
-
----
-
-### styles in JavaScript
+### styles in React
 
 in CSS:
 ```
 .internal-link{
-  border-bottom: '3px solid #f7d71e',
-  font-style: 'italic'
+  color: blue;
+  font-weight: bold;
+  &:hover{
+    background: DarkSeaGreen
+  }
 }
 ```
 note: here's a pretty standard bunch of css
@@ -129,15 +130,15 @@ note: here's a pretty standard bunch of css
 in: JS
 ```
 const internalLink = {
-  borderBottom: '3px solid #f7d71e',
-  fontStyle: 'italic'
+  color: "blue";
+  fontWeight: "bold";
 }
 ```
-note: in JS, we just need to convert any kabob-case into camel case. This is just a Plain Ol JavaScript Object and can be treated as such. 
+note: in JS, we just need to convert any kabob-case into camel case. We don't want the dashes to be interpreted as minus signs. This is just a Plain Ol JavaScript Object and can be treated as such. 
 
 ---
 
-### let's do it
+### In action
 
 ```
 const NextLink = ({ link }) => (
@@ -146,7 +147,7 @@ const NextLink = ({ link }) => (
   </Link>
 )
 ```
-note: this is from our DetroitJS website. This block deals with navigation links that go to other routed pages, rather than external links. Let's say we want to add our POJO of styles to just this block. We could add yet another CSS class to the list, we could find out what border bottom, and italic are. Let's be lazy.
+note: this is from our DetroitJS website. DetroitJS uses tachyons a css library of helper functions. This block deals with navigation links that go to other routed pages, rather than external links. Let's say we want to add our POJO of styles from the last slide to just this block. We could add yet another CSS class to the list, we could find out what border bottom, and italic are. Let's be lazy.
 
 ---
 
@@ -161,14 +162,15 @@ const NextLink = ({ link }) => (
   </Link>
 )
 ```
-note: now there's no worrying that some other class is going to mess our style up. We're hitting the styles at the root, in the element. 
+note: now there's no worrying that some other class is going to mess our style up. We're hitting the styles at the root, in the element. But what about, if afterward, we want to add another block of styles from somewhere else. 
+
 ---
 
 # Combine styles.
 
 const superStyle = Object.assign(internalLink, blueStuff, sunnyD, purpleStuff);
 
-note: what if we have a bunch of javaScript style objects we need to add to an element? Just treat them like javaScript objects and you'll be fine. Any properties later in the chain will supercede properties earlier in the chain. 
+note:  Properties later in the chain will supercede properties earlier in the chain. So here, the purpleStuff wins. 
 
 ---
 
@@ -237,7 +239,7 @@ background: ${props => props.primary ? 'palevioletred' : 'white'};
 // later in the file
 render = () => <BlueLink primary link={link} key={shortid.generate()} />
 ```
-note: there's also a themeing system built in! Passing in a theme prop, can modify your themes. Arguments to the styles can also be passed in as props. 
+note: there's also a themeing system built in! Passing in a theme prop, can modify your themes. Arguments to the styles can also be passed in as props. read more about it at https://www.styled-components.com/docs/tooling#styled-theming
 ---
 ### JSXStyle
 
@@ -257,7 +259,7 @@ note: This saves you the time of naming classes, because there aren't any classe
 
 ---
 
-### GLamorous
+### Glamorous
 
 ```
 const MyStyledDiv = glamorous.div({
@@ -269,7 +271,7 @@ const MyStyledDiv = glamorous.div({
 
 <myStyledDiv>Wow a Div!</myStyledDiv>
 ```
-note: glamorous is very much like styled components, except it requires you to write with JS style objects. You can also override a components style by passing in styles to the CSS prop, as well as overriding it's childrens styles. 
+note: glamorous is very much like styled components, except it requires you to write with JS style objects. You can also override a components style by passing in styles to the CSS prop. You're also able to override, some of your elements children's styles. 
 
 ---
 ### CSS Modules
